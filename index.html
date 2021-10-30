@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<style type="text/css">
+		#userForm {
+			margin: 10px;
+		}
+
+		.formContainer {
+			margin-bottom: 10px;
+		}
+
+		.labelContainer {
+			width: 15%;
+			display: inline-block;
+		}
+
+		.formContainer {
+			width: 50%;
+			border: 1px solid black;
+		}
+
+		.required > input {
+			background-color: #ABCDEF;
+		}
+
+		.sun {
+			background-color: #D0B146;
+			color: white;
+		}
+
+		.fire {
+			background-color: #CC372B;
+			color: white;
+		}
+
+		.noele {
+			background-color: #808080;
+			color: white;
+		}
+
+		.yang .bullettype {
+			background-color: #EFEFEF;
+			color: black;
+		}
+
+		.yin .bullettype {
+			background-color: #9E9E9E;
+			color: white;
+		}
+
+		.boost1 .boost {
+			background-color: #F1BB50;
+			color: white;
+		}
+
+		.boost2 .boost {
+			background-color: #ED7F47;
+			color: white;
+		}
+
+		.boost3 .boost {
+			background-color: #E5483D;
+		}
+
+		.dmgTable, th, td {
+			text-align: center;
+			padding: 5px 3px;
+			border: 1px solid black;
+			border-spacing: 0px;
+		}
+
+		.boost0 .boost {
+			background-color: gray;
+			color: white;
+		}
+	</style>
+</head>
+<body>
+	<div class = "formContainer">
+		<form id = "userForm">
+			<!-- Yang ATK -->
+			<div class = "input required">
+				<span class = "labelContainer">
+					<label for = "yangatk">Yang ATK</label>
+				</span>
+				<input type = "text" name = "yangatk" value = "574">
+				<span class = "labelContainer">
+					<label for = "yangatk_lvl">Buff</label>
+				</span>
+				<input type = "number" min = "-10" max = "10" name = "yangatk_lvl" value = "3">
+			</div>
+			<div class = "input required">
+				<span class = "labelContainer">
+					<label for = "yinatk">Yin ATK</label>
+				</span>
+				<input type = "text" name = "yinatk" value = "494">
+				<span class = "labelContainer">
+					<label for = "yinatk_lvl">Buff</label>
+				</span>
+				<input type = "number" min = "-10" max = "10" name = "yinatk_lvl" value = "0">
+			</div>
+			<div class = "input required">
+				<span class = "labelContainer">
+					<label for = "agi">Agility</label>
+				</span>
+				<input type = "text" name = "agi" value = "521">
+				<span class = "labelContainer">
+					<label for = "agi_lvl">Buff</label>
+				</span>
+				<input type = "number" min = "-10" max = "10" name = "agi_lvl" value = "8">
+			</div>
+			<div class = "input required">
+				<span class = "labelContainer">
+					<label for = "boostlvl">Boost</label>
+				</span>
+				<input type = "number" min = "0" max = "3" name = "boostlvl" value = "1">
+			</div>
+			<div class = "input">
+				<button type = "button" form = "userForm" value = "submit" onclick = "calc()">Calculate</button>
+			</div>
+		</form>
+	</div>
+	<div class="dmgTableContainer">
+		<table class = "dmgTable">
+			<tr class = "columnLabel">
+				<th>Boost</th>
+				<th>Bullet line name</th>
+				<th>Bullet count</th>
+				<th>Yin / Yang</th>
+				<th>Against 0 DEF</th>
+				<th>Against -2 DEF</th>
+				<th>Against -10 DEF</th>
+			</tr>
+			<tr class = "sun yang boost0" id = "line1">
+				<td class="boost">0</td>
+				<td>10^6 Flare</td>
+				<td class="bulletcount">14</td>
+				<td class="bullettype">Yang</td>
+				<td id="line1_0def" class="dmg">0</td>
+				<td id="line1_2def" class="dmg">0</td>
+				<td id="line1_10def" class="dmg">0</td>
+			</tr>
+			<tr class = "sun yang boost1" id = "line2">
+				<td class="boost">1</td>
+				<td>10^12 Flare</td>
+				<td class="bulletcount">3</td>
+				<td class="bullettype">Yang</td>
+				<td id="line2_0def" class="dmg">0</td>
+				<td id="line2_2def" class="dmg">0</td>
+				<td id="line2_10def" class="dmg">0</td>
+			</tr>
+			<tr class = "noele yin boost1" id = "line3">
+				<td class="boost">1</td>
+				<td>10^15 Flare</td>
+				<td class="bulletcount">3</td>
+				<td class="bullettype">Yin</td>
+				<td id="line3_0def" class="dmg">0</td>
+				<td id="line3_2def" class="dmg">0</td>
+				<td id="line3_10def" class="dmg">0</td>
+			</tr>
+			<tr class = "noele yin boost1" id = "line4">
+				<td class="boost">1</td>
+				<td>10^18 Flare</td>
+				<td class="bulletcount">2</td>
+				<td class="bullettype">Yin</td>
+				<td id="line4_0def" class="dmg">0</td>
+				<td id="line4_2def" class="dmg">0</td>
+				<td id="line5_10def" class="dmg">0</td>
+			</tr>
+			<tr class = "noele yang boost2" id = "line5">
+				<td class="boost">2</td>
+				<td>10^21 Flare</td>
+				<td class="bulletcount">2</td>
+				<td class="bullettype">Yang</td>
+				<td id="line5_0def" class="dmg">0</td>
+				<td id="line5_2def" class="dmg">0</td>
+				<td id="line5_10def" class="dmg">0</td>
+			</tr>
+			<tr class = "sun yang boost3" id = "line6">
+				<td class="boost">3</td>
+				<td>10^24 Flare</td>
+				<td class="bulletcount">1</td>
+				<td class="bullettype">Yang</td>
+				<td id="line6_0def" class="dmg">0</td>
+				<td id="line6_2def" class="dmg">0</td>
+				<td id="line6_10def" class="dmg">0</td>
+			</tr>
+		</table>
+	</div>
+	<script>
+		function calc(){
+			let yang_atk = eval(document.getElementsByName("yangatk")[0].value);
+			let yin_atk = eval(document.getElementsByName("yinatk")[0].value);
+			let agi = eval(document.getElementsByName("agi")[0].value);
+			document.getElementsByName("yangatk")[0].value = yang_atk;
+			document.getElementsByName("yinatk")[0].value = yin_atk;
+			document.getElementsByName("agi")[0].value = agi;
+			let yang_atk_lvl = document.getElementsByName("yangatk_lvl")[0].value;
+			let yin_atk_lvl = document.getElementsByName("yinatk_lvl")[0].value;
+			let agi_lvl = document.getElementsByName("agi_lvl")[0].value;
+
+			yang_atk = yang_atk_lvl >= 0 ? yang_atk * (1 + 0.3 * Math.abs(yang_atk_lvl)) : yang_atk / (1 + 0.3 * Math.abs(yang_atk_lvl));
+			yin_atk = yin_atk_lvl >= 0 ? yin_atk * (1 + 0.3 * Math.abs(yin_atk_lvl)) : yin_atk / (1 + 0.3 * Math.abs(yin_atk_lvl));
+			agi = agi_lvl >= 0 ? agi * (1 + 0.3 * Math.abs(agi_lvl)) : agi / (1 + 0.3 * Math.abs(agi_lvl));
+
+			const line_val = [
+				[6.66, 0.7],
+				[7.74, 0.7],
+				[6.45, 0],
+				[7.74, 0.8],
+				[6.06, 0],
+				[8.38, 0.8]
+			];
+
+			for (let line in line_val){
+				line = Number(line) + 1;
+				const elem = document.getElementById("line" + line);
+				let effective_stat = elem.children[3].value == "Yang" ? yang_atk : yin_atk;
+				effective_stat += line_val[line-1][1] * agi;
+				let elemental_effectiveness = elem.classList.contains("sun") ? 2 : 1;
+				elem.children[4].innerHTML = Math.round(effective_stat * line_val[line-1][0] * elemental_effectiveness);
+				elem.children[5].innerHTML = Math.round(effective_stat * line_val[line-1][0] * 1.6 * elemental_effectiveness);
+				elem.children[6].innerHTML = Math.round(effective_stat * line_val[line-1][0] * 4 * elemental_effectiveness);
+				console.log(effective_stat * line_val[line-1][0]);
+			}
+		}
+	</script>
+</body>
+</html>
