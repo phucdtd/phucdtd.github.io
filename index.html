@@ -11,7 +11,7 @@
 		}
 
 		.labelContainer {
-			width: 15%;
+			width: 20%;
 			display: inline-block;
 		}
 
@@ -117,6 +117,17 @@
 				</span>
 				<input type = "number" min = "0" max = "3" name = "boostlvl" value = "1">
 			</div>
+			<div class = "input"><span class="labelContainer"></span></div>
+			<div class = "input required">
+				<span class = "labelContainer">
+					<label for = "yangmult">Yang multiplier</label>
+				</span>
+				<input type = "number" min = "0" max = "1" name = "yangmult" value = "0.0352081">
+				<span class = "labelContainer">
+					<label for = "yinmult">Yin multiplier</label>
+				</span>
+				<input type = "number" min = "0" max = "1" name = "yinmult" value = "0.0353549">
+			</div>
 			<div class = "input">
 				<button type = "button" form = "userForm" value = "submit" onclick = "calc()">Calculate</button>
 			</div>
@@ -205,6 +216,11 @@
 			yin_atk = yin_atk_lvl >= 0 ? yin_atk * (1 + 0.3 * Math.abs(yin_atk_lvl)) : yin_atk / (1 + 0.3 * Math.abs(yin_atk_lvl));
 			agi = agi_lvl >= 0 ? agi * (1 + 0.3 * Math.abs(agi_lvl)) : agi / (1 + 0.3 * Math.abs(agi_lvl));
 
+			let yangmult = Number(document.getElementsByName("yangmult")[0].value);
+			let yinmult = Number(document.getElementsByName("yinmult")[0].value);
+
+			console.log(yangmult, yinmult);
+
 			const line_val = [
 				[6.66, 0.7],
 				[7.74, 0.7],
@@ -217,8 +233,9 @@
 			for (let line in line_val){
 				line = Number(line) + 1;
 				const elem = document.getElementById("line" + line);
-				let effective_stat = elem.children[3].value == "Yang" ? yang_atk : yin_atk;
+				let effective_stat = elem.children[3].innerHTML == "Yang" ? yang_atk : yin_atk;
 				effective_stat += line_val[line-1][1] * agi;
+				effective_stat *= (elem.children[3].innerHTML == "Yang" ? yangmult : yinmult);
 				let elemental_effectiveness = elem.classList.contains("sun") ? 2 : 1;
 				elem.children[4].innerHTML = Math.round(effective_stat * line_val[line-1][0] * elemental_effectiveness);
 				elem.children[5].innerHTML = Math.round(effective_stat * line_val[line-1][0] * 1.6 * elemental_effectiveness);
